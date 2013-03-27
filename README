@@ -1,3 +1,15 @@
+Why this fork
+-------------
+
+- Pybugz is a great tool for managing multiple Bugzilla instances.  
+  Unfortunately older Bugzillas (2.x) do not work with post 0.9.3 tags.  
+
+- Comments and title search patch was removed with the swith to xmlrpc 
+  (commit 26e59afb4e04862d23520eaf6272fad3e42b251b).
+
+Following is the upstream readme.
+
+
 PyBugz - Python Bugzilla Interface
 ----------------------------------
 
