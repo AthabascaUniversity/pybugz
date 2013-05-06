@@ -8,6 +8,10 @@ import mimetypes
 import os
 import re
 import sys
+import logging
+
+# log everything and send to stderr
+logging.basicConfig(level=logging.DEBUG)
 
 from cookielib import LWPCookieJar, CookieJar
 from cStringIO import StringIO
@@ -786,16 +790,15 @@ class Bugz:
 			base64string = base64.encodestring('%s:%s' % (self.httpuser, self.httppassword))[:-1]
 			req.add_header("Authorization", "Basic %s" % base64string)
 		resp = self.opener.open(req)
+		resp_page = resp.read()
 
 		try:
 			re_bug = re.compile(r'(?:\s+)?<title>.*Bug ([0-9]+) Submitted.*</title>')
-			bug_match = re_bug.search(resp.read())
-			if bug_match:
-				return int(bug_match.group(1))
-		except:
-			pass
-
-		return 0
+			bug_match = re_bug.search(resp_page)
+			logging.debug('Bug %s submitted' % bug_match.group(1))
+		except Exception, ex:
+			logging.exception("\nCould not create bug!")
+			exit(3)
 
 	def attach(self, bugid, title, description, filename,
 			content_type = 'text/plain', ispatch = False):

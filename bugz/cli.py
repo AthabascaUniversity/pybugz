@@ -497,11 +497,7 @@ class PrettyBugz(Bugz):
 				self.log('Submission aborted')
 				return
 
-		result = Bugz.post(self, product, component, title, description, url, assigned_to, cc, keywords, prodversion, dependson, blocked, priority, severity)
-		if result is not None and result != 0:
-			self.log('Bug %d submitted' % result)
-		else:
-			raise RuntimeError('Failed to submit bug')
+		Bugz.post(self, product, component, title, description, url, assigned_to, cc, keywords, prodversion, dependson, blocked, priority, severity)
 
 	def modify(self, bugid, **kwds):
 		"""Modify an existing bug (eg. adding a comment or changing resolution.)"""
